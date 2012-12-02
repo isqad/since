@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<%= render '/refinery/html_tag' %>
+  <% site_bar = render('/refinery/site_bar', :head => true) -%>
+  <%= render '/refinery/head' %>
+  <body>
+    <%= site_bar -%>
+    <%= render '/refinery/ie6check' if request.env['HTTP_USER_AGENT'] =~ /MSIE/ -%>
+    <div id="page_container">
+      <header id="header" class="gradient">
+        <%= render '/refinery/header' -%>
+        <div id="lang_switch">
+          <%= link_to t(:eng), refinery.url_for(params.merge(:locale => :en)) %> | 
+          <%= link_to t(:rus), refinery.url_for(params.merge(:locale => :ru)) %>
+        </div>
+      </header>
+      <div class="container_12 clearfix">
+        <div class="grid_3 alpha">
+          <h2 class="title-nav"><%= t(:navigation) %></h2>
+          <%= render(:partial => "/refinery/menu", :locals => {
+             :dom_id => 'menu',
+             :css => 'menu'
+           }) %>
+        </div>
+        <div class="grid_9 omega">
+          <section id="page">
+            <%= yield %>
+          </section>
+        </div>
+      </div> 
+      <footer>
+        <%= render '/refinery/footer' -%>
+      </footer>
+    </div>
+    <%= render '/refinery/javascripts' %>
+  </body>
+</html>
